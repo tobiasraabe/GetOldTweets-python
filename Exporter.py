@@ -22,6 +22,7 @@ def main(argv):
        until: The upper bound date (yyyy-mm-aa)
  querysearch: A query text to be matched
    maxtweets: The maximum number of tweets to retrieve
+    filename:
 
  \nExamples:
  # Example 1 - Get tweets by username [barackobama]
@@ -39,7 +40,7 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(argv, "", ("username=", "near=", "within=",
-                                              "since=", "until=", "querysearch=", "toptweets", "maxtweets="))
+                                              "since=", "until=", "querysearch=", "toptweets", "maxtweets=", "filename="))
 
         tweetCriteria = got.manager.TweetCriteria()
 
@@ -68,7 +69,10 @@ def main(argv):
             elif opt == '--within':
                 tweetCriteria.within = '"' + arg + '"'
 
-        outputFile = codecs.open("output_got.csv", "w+", "utf-8")
+            elif opt == '--filename':
+                filename = arg
+
+        outputFile = codecs.open("{}.csv".format(filename), "w+", "utf-8")
 
         outputFile.write(
             'username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink')
@@ -88,7 +92,8 @@ def main(argv):
         print('Arguments parser error, try -h' + arg)
     finally:
         outputFile.close()
-        print('Done. Output file generated "output_got.csv".')
+        print('Done. Output file generated "{}.csv".'.format(filename))
+
 
 if __name__ == '__main__':
     main(sys.argv[1:])
