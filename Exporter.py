@@ -42,7 +42,8 @@ def main(argv):
     try:
         opts, args = getopt.getopt(
             argv, "", ("username=", "near=", "within=", "since=", "until=",
-                       "querysearch=", "toptweets", "maxtweets=", "filename="))
+                       "querysearch=", "toptweets", "maxtweets=", "filename=",
+                       "mode="))
 
         tweetCriteria = got.manager.TweetCriteria()
 
@@ -74,7 +75,10 @@ def main(argv):
             elif opt == '--filename':
                 filename = arg
 
-        outputFile = codecs.open("{}.csv".format(filename), "w+", "utf-8")
+            elif opt == '--mode':
+                mode = arg
+
+        outputFile = codecs.open("{}.csv".format(filename), mode, "utf-8")
 
         outputFile.write(
             'username;date;retweets;favorites;text;geo;mentions;hashtags;id'
