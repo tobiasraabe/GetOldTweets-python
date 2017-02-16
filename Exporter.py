@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
 import getopt
-import datetime
 import codecs
 if sys.version_info[0] < 3:
     import got
@@ -31,16 +30,19 @@ def main(argv):
  # Example 2 - Get tweets by query search [europe refugees]
  python Exporter.py --querysearch "europe refugees" --maxtweets 1\n
 
- # Example 3 - Get tweets by username and bound dates [barackobama, '2015-09-10', '2015-09-12']
- python Exporter.py --username "barackobama" --since 2015-09-10 --until 2015-09-12 --maxtweets 1\n
+ # Example 3 - Get tweets by username and bound dates [barackobama,
+ '2015-09-10', '2015-09-12']
+ python Exporter.py --username "barackobama" --since 2015-09-10 --until
+ 2015-09-12 --maxtweets 1\n
 
  # Example 4 - Get the last 10 top tweets by username
  python Exporter.py --username "barackobama" --maxtweets 10 --toptweets\n""")
         return
 
     try:
-        opts, args = getopt.getopt(argv, "", ("username=", "near=", "within=",
-                                              "since=", "until=", "querysearch=", "toptweets", "maxtweets=", "filename="))
+        opts, args = getopt.getopt(
+            argv, "", ("username=", "near=", "within=", "since=", "until=",
+                       "querysearch=", "toptweets", "maxtweets=", "filename="))
 
         tweetCriteria = got.manager.TweetCriteria()
 
@@ -75,14 +77,18 @@ def main(argv):
         outputFile = codecs.open("{}.csv".format(filename), "w+", "utf-8")
 
         outputFile.write(
-            'username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink')
+            'username;date;retweets;favorites;text;geo;mentions;hashtags;id'
+            ';permalink')
 
         print('Searching...\n')
 
         def receiveBuffer(tweets):
             for t in tweets:
-                outputFile.write(('\n%s;%s;%d;%d;"%s";%s;%s;%s;"%s";%s' % (t.username, t.date.strftime(
-                    "%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.text, t.geo, t.mentions, t.hashtags, t.id, t.permalink)))
+                outputFile.write((
+                    '\n%s;%s;%d;%d;"%s";%s;%s;%s;"%s";%s' % (
+                        t.username, t.date.strftime("%Y-%m-%d %H:%M"),
+                        t.retweets, t.favorites, t.text, t.geo, t.mentions,
+                        t.hashtags, t.id, t.permalink)))
             outputFile.flush()
             print('More %d saved on file...\n' % len(tweets))
 
