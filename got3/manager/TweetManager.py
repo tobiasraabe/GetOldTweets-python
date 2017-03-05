@@ -1,6 +1,7 @@
 import datetime
 import http.cookiejar
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -18,6 +19,8 @@ class TweetManager:
 
     @staticmethod
     def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100):
+        os.environ['GOT_COUNTER'] = '0'
+
         refreshCursor = ''
 
         results = []
@@ -37,6 +40,9 @@ class TweetManager:
 
             if len(tweets) == 0:
                 break
+
+            os.environ['GOT_COUNTER'] = str(
+                int(os.environ['GOT_COUNTER']) + len(tweets))
 
             for tweetHTML in tweets:
                 tweetPQ = PyQuery(tweetHTML)
@@ -106,6 +112,9 @@ class TweetManager:
 
         if receiveBuffer and len(resultsAux) > 0:
             receiveBuffer(resultsAux)
+
+        print('Collected {} tweets.'.format(
+            os.environ.get('GOT_COUNTER', 'No response')))
 
         return results
 

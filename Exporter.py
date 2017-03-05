@@ -2,10 +2,7 @@
 import sys
 import getopt
 import codecs
-if sys.version_info[0] < 3:
-    import got
-else:
-    import got3 as got
+import got3 as got
 
 
 def main(argv):
@@ -84,7 +81,7 @@ def main(argv):
             'username;date;retweets;favorites;text;geo;mentions;hashtags;id'
             ';permalink')
 
-        print('Searching...\n')
+        print('Searching...')
 
         def receiveBuffer(tweets):
             for t in tweets:
@@ -94,7 +91,6 @@ def main(argv):
                         t.retweets, t.favorites, t.text, t.geo, t.mentions,
                         t.hashtags, t.id, t.permalink)))
             outputFile.flush()
-            print('More %d saved on file...\n' % len(tweets))
 
         got.manager.TweetManager.getTweets(tweetCriteria, receiveBuffer)
 
