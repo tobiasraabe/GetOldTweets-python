@@ -30,3 +30,7 @@ class TweetCriteria:
     def setTopTweets(self, topTweets):
         self.topTweets = topTweets
         return self
+
+    def set_min_retweets(self, min_retweets):
+        self.min_retweets = min_retweets
+        return self

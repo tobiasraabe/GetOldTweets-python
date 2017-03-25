@@ -139,16 +139,19 @@ class TweetManager:
 
         if hasattr(tweetCriteria, 'lang'):
             urlLang = 'lang=' + tweetCriteria.lang + '&'
+        else:
+            urlLang = ''
 
         if hasattr(tweetCriteria, 'querySearch'):
             urlGetData += ' ' + tweetCriteria.querySearch
 
         if hasattr(tweetCriteria, 'near'):
-            urlGetData += ("&near:" + tweetCriteria.near + " within:" +
+            urlGetData += ('&near:' + tweetCriteria.near + ' within:' +
                            tweetCriteria.within)
 
-        else:
-            urlLang = ''
+        if hasattr(tweetCriteria, 'min_retweets'):
+            urlGetData += (' min_retweets:' + tweetCriteria.min_retweets)
+
         url = url % (urllib.parse.quote(urlGetData), urlLang, refreshCursor)
 
         headers = [

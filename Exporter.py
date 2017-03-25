@@ -18,7 +18,8 @@ def main(argv):
        until: The upper bound date (yyyy-mm-aa)
  querysearch: A query text to be matched
    maxtweets: The maximum number of tweets to retrieve
-    filename:
+    filename: Enter a name for the file where the tweets are stored
+min_retweets: Enter the number of minimum retweets
 
  \nExamples:
  # Example 1 - Get tweets by username [barackobama]
@@ -38,12 +39,14 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(
-            argv, "", ("username=", "near=", "within=", "since=", "until=",
-                       "querysearch=", "toptweets", "maxtweets=", "filename=",
-                       "mode="))
+            argv, '', ('username=', 'near=', 'within=', 'since=', 'until=',
+                       'querysearch=', 'toptweets', 'maxtweets=', 'filename=',
+                       'mode=', 'min_retweets='))
 
         tweetCriteria = got.manager.TweetCriteria()
 
+        # Add default value for mode
+        mode = 'w+'
         for opt, arg in opts:
             if opt == '--username':
                 tweetCriteria.username = arg
@@ -74,6 +77,9 @@ def main(argv):
 
             elif opt == '--mode':
                 mode = arg
+
+            elif opt == '--min_retweets':
+                tweetCriteria.min_retweets = arg
 
         outputFile = codecs.open("{}.csv".format(filename), mode, "utf-8")
 
