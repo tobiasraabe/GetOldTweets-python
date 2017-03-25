@@ -152,6 +152,9 @@ class TweetManager:
         if hasattr(tweetCriteria, 'min_retweets'):
             urlGetData += (' min_retweets:' + tweetCriteria.min_retweets)
 
+        if hasattr(tweetCriteria, 'min_faves'):
+            urlGetData += (' min_faves:' + tweetCriteria.min_faves)
+
         url = url % (urllib.parse.quote(urlGetData), urlLang, refreshCursor)
 
         headers = [

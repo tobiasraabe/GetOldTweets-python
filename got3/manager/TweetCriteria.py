@@ -34,3 +34,7 @@ class TweetCriteria:
     def set_min_retweets(self, min_retweets):
         self.min_retweets = min_retweets
         return self
+
+    def set_min_faves(self, min_faves):
+        self.min_faves = min_faves
+        return self

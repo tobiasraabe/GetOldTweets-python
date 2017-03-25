@@ -20,6 +20,7 @@ def main(argv):
    maxtweets: The maximum number of tweets to retrieve
     filename: Enter a name for the file where the tweets are stored
 min_retweets: Enter the number of minimum retweets
+   min_faves: Enter the number of minimum faves for tweets with youtube vids
 
  \nExamples:
  # Example 1 - Get tweets by username [barackobama]
@@ -41,7 +42,7 @@ min_retweets: Enter the number of minimum retweets
         opts, args = getopt.getopt(
             argv, '', ('username=', 'near=', 'within=', 'since=', 'until=',
                        'querysearch=', 'toptweets', 'maxtweets=', 'filename=',
-                       'mode=', 'min_retweets='))
+                       'mode=', 'min_retweets=', 'min_faves='))
 
         tweetCriteria = got.manager.TweetCriteria()
 
@@ -80,6 +81,9 @@ min_retweets: Enter the number of minimum retweets
 
             elif opt == '--min_retweets':
                 tweetCriteria.min_retweets = arg
+
+            elif opt == '--min_faves':
+                tweetCriteria.min_faves = arg
 
         outputFile = codecs.open("{}.csv".format(filename), mode, "utf-8")
 
