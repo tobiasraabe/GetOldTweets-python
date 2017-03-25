@@ -3,6 +3,7 @@ import sys
 import getopt
 import codecs
 import got3 as got
+import os
 
 
 def main(argv):
@@ -85,7 +86,7 @@ min_retweets: Enter the number of minimum retweets
             elif opt == '--min_faves':
                 tweetCriteria.min_faves = arg
 
-        outputFile = codecs.open("{}.csv".format(filename), mode, "utf-8")
+        outputFile = codecs.open('{}.csv'.format(filename), mode, 'utf-8')
 
         outputFile.write(
             'username;date;retweets;favorites;text;geo;mentions;hashtags;id'
@@ -108,7 +109,13 @@ min_retweets: Enter the number of minimum retweets
         print('Arguments parser error, try -h' + arg)
     finally:
         outputFile.close()
-        print('Done. Output file generated "{}.csv".'.format(filename))
+
+        collected_tweets = int(os.environ.get('GOT_COUNTER'))
+        if collected_tweets == 0:
+            os.remove('{}.csv'.format(filename))
+            print('Done. Empty file removed.')
+        else:
+            print('Done. Output file generated "{}.csv".'.format(filename))
 
 
 if __name__ == '__main__':
